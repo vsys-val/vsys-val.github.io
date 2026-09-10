@@ -1,0 +1,1175 @@
+<!DOCTYPE html>
+<html lang="pt-BR" data-lang="pt">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Valério, estudante de Ciência da Computação na UERJ. Backend em Python e engenharia de dados, com método antes de código.">
+<meta name="theme-color" content="#E4E5DF">
+<title>Valério</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wdth,wght@12..96,75..100,300..800&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
+<style>
+/* ============================================================
+   valerio / landing
+   Ground: calcário frio. Tinta: quase preto. Acento: ultramarino.
+   Display: Bricolage Grotesque · Texto: IBM Plex Sans · Dados: IBM Plex Mono
+   Tema único e deliberado: claro. Tudo pintado explicitamente.
+   ============================================================ */
+
+:root{
+  --ground:#E4E5DF;
+  --ground-2:#EEEFEA;
+  --ground-3:#D8DAD2;
+  --ink:#121310;
+  --ink-2:#5C5E54;
+  --line:rgba(18,19,16,.16);
+  --line-strong:rgba(18,19,16,.34);
+  --accent:#1F2ABF;
+  --accent-wash:rgba(31,42,191,.09);
+
+  --void:#121310;
+  --void-2:#1B1D17;
+  --on-void:#E4E5DF;
+  --on-void-2:#8B8E80;
+  --void-line:rgba(228,229,223,.18);
+  --accent-void:#8B93FF;
+
+  --sans:'IBM Plex Sans',system-ui,'Segoe UI',Roboto,sans-serif;
+  --mono:'IBM Plex Mono',ui-monospace,'SF Mono',Menlo,Consolas,monospace;
+  --display:'Bricolage Grotesque','IBM Plex Sans',system-ui,sans-serif;
+
+  --gutter:clamp(20px,4.5vw,72px);
+  --spine:74px;
+  --maxw:1440px;
+  --ease:cubic-bezier(.2,.7,.2,1);
+  color-scheme:light;
+}
+
+*,*::before,*::after{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{
+  margin:0;
+  background:var(--ground);
+  color:var(--ink);
+  font-family:var(--sans);
+  font-size:clamp(1rem,.96rem + .22vw,1.1rem);
+  line-height:1.55;
+  -webkit-font-smoothing:antialiased;
+  -moz-osx-font-smoothing:grayscale;
+  overflow-x:hidden;
+}
+img{display:block;max-width:100%;height:auto}
+a{color:inherit;text-decoration:none}
+button{font:inherit;color:inherit;background:none;border:0;padding:0;cursor:pointer}
+ul,ol{list-style:none;margin:0;padding:0}
+h1,h2,h3,h4,p{margin:0;overflow-wrap:break-word}
+h1,h2,h3{text-wrap:balance}
+::selection{background:var(--accent);color:var(--ground-2)}
+:focus-visible{outline:2px solid var(--accent);outline-offset:3px;border-radius:2px}
+
+/* ---------- grão ---------- */
+.grain{
+  position:fixed;inset:0;z-index:200;pointer-events:none;
+  opacity:.42;mix-blend-mode:multiply;
+  background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='140' height='140'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3' stitchTiles='stitch'/><feColorMatrix type='saturate' values='0'/></filter><rect width='140' height='140' filter='url(%23n)' opacity='.22'/></svg>");
+}
+
+/* ---------- utilidades ---------- */
+.mono{
+  font-family:var(--mono);font-weight:500;
+  font-size:.7rem;letter-spacing:.15em;text-transform:uppercase;
+}
+.wrap{
+  width:100%;max-width:var(--maxw);
+  margin-inline:auto;
+  padding-inline:var(--gutter);
+}
+.rule{height:1px;background:var(--line);border:0;margin:0}
+
+/* ---------- spine (rail fixo) ---------- */
+.spine{
+  position:fixed;left:0;top:0;bottom:0;width:var(--spine);
+  z-index:90;display:none;
+  border-right:1px solid var(--line);
+  background:var(--ground);
+}
+.spine-inner{
+  position:absolute;inset:0;
+  display:flex;flex-direction:column;align-items:center;justify-content:space-between;
+  padding-block:22px;
+}
+.spine-mark{
+  font-family:var(--mono);font-weight:500;font-size:.72rem;
+  letter-spacing:.1em;color:var(--ink);
+}
+.spine-now{
+  writing-mode:vertical-rl;
+  font-family:var(--mono);font-size:.68rem;letter-spacing:.22em;
+  text-transform:uppercase;color:var(--ink-2);
+  transition:color .4s var(--ease);
+}
+.spine-bar{
+  width:1px;flex:1;margin-block:18px;
+  background:var(--line);position:relative;
+}
+.spine-bar::after{
+  content:"";position:absolute;left:0;top:0;width:1px;height:var(--p,0%);
+  background:var(--accent);
+}
+@media (min-width:1080px){
+  .spine{display:block}
+  body{padding-left:var(--spine)}
+}
+
+/* ---------- nav ---------- */
+.nav{
+  position:fixed;top:0;left:0;right:0;z-index:100;
+  display:flex;align-items:center;justify-content:space-between;
+  gap:16px;
+  padding:12px var(--gutter);
+  background:rgba(228,229,223,.9);
+  background:color-mix(in srgb,var(--ground) 88%,transparent);
+  backdrop-filter:blur(9px);-webkit-backdrop-filter:blur(9px);
+  border-bottom:1px solid transparent;
+  transform:translateY(-102%);
+  transition:transform .5s var(--ease),border-color .5s var(--ease);
+}
+.nav.is-up{transform:none;border-bottom-color:var(--line)}
+@media (min-width:1080px){.nav{left:var(--spine)}}
+.nav-name{font-family:var(--display);font-weight:700;font-size:1rem;letter-spacing:-.01em}
+.nav-links{display:none;gap:26px}
+@media (min-width:820px){.nav-links{display:flex}}
+.nav-links a{
+  font-family:var(--mono);font-size:.7rem;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--ink-2);padding-block:4px;position:relative;
+  transition:color .3s var(--ease);
+}
+.nav-links a::after{
+  content:"";position:absolute;left:0;bottom:0;height:1px;width:0;background:var(--accent);
+  transition:width .35s var(--ease);
+}
+.nav-links a:hover{color:var(--ink)}
+.nav-links a:hover::after,.nav-links a[aria-current="true"]::after{width:100%}
+.nav-links a[aria-current="true"]{color:var(--ink)}
+
+.lang{
+  display:flex;align-items:center;gap:2px;
+  border:1px solid var(--line-strong);border-radius:999px;padding:2px;
+}
+.lang button{
+  font-family:var(--mono);font-size:.66rem;letter-spacing:.12em;
+  padding:4px 10px;border-radius:999px;color:var(--ink-2);
+  transition:background .3s var(--ease),color .3s var(--ease);
+}
+.lang button[aria-pressed="true"]{background:var(--ink);color:var(--ground)}
+
+/* ---------- seções ---------- */
+.sec{padding-block:clamp(76px,11vw,152px)}
+.sec-head{
+  display:flex;align-items:baseline;gap:16px;flex-wrap:wrap;
+  padding-bottom:18px;border-bottom:1px solid var(--line);
+  margin-bottom:clamp(34px,5vw,64px);
+}
+.sec-head .mono{color:var(--ink-2)}
+.sec-title{
+  font-family:var(--display);
+  font-size:clamp(2.1rem,5.2vw,4.1rem);
+  font-weight:700;line-height:.95;letter-spacing:-.035em;
+  font-variation-settings:'wdth' 92,'opsz' 60;
+}
+
+/* ---------- hero ---------- */
+.hero{
+  position:relative;
+  padding-top:clamp(64px,11vw,132px);
+  padding-bottom:clamp(48px,7vw,96px);
+}
+.hero-grid{
+  display:grid;grid-template-columns:1fr;gap:clamp(28px,4vw,48px);
+  align-items:start;
+}
+@media (min-width:900px){
+  .hero-grid{grid-template-columns:minmax(0,1.4fr) minmax(260px,.9fr)}
+}
+.hero-top{
+  display:flex;align-items:center;justify-content:space-between;
+  gap:14px 24px;flex-wrap:wrap;
+  margin-bottom:clamp(22px,3.4vw,40px);
+}
+.hero-eyebrow{
+  display:flex;flex-wrap:wrap;gap:8px 20px;color:var(--ink-2);
+}
+.hero-eyebrow span{display:inline-flex;align-items:center;gap:9px}
+.hero-eyebrow span::before{
+  content:"";width:5px;height:5px;background:var(--accent);border-radius:50%;
+}
+.hero-name{
+  font-family:var(--display);
+  font-size:clamp(3.5rem,19vw,15rem);
+  line-height:.82;font-weight:800;letter-spacing:-.05em;
+  font-variation-settings:'wdth' 88,'opsz' 96;
+  margin-bottom:clamp(24px,3.4vw,44px);
+  overflow-wrap:normal;
+}
+.hero-name .ch{display:inline-block;will-change:transform}
+.hero-thesis{
+  font-size:clamp(1.15rem,1.9vw,1.6rem);
+  line-height:1.34;max-width:23ch;
+  letter-spacing:-.012em;
+}
+.hero-thesis em{font-style:italic;color:var(--accent)}
+.hero-sub{
+  margin-top:18px;max-width:46ch;color:var(--ink-2);
+  font-size:.98rem;line-height:1.6;
+}
+
+.hero-figure-wrap{
+  position:relative;justify-self:center;width:100%;max-width:400px;
+}
+.hero-figure-wrap::before{
+  content:"";position:absolute;inset:16px -16px -16px 16px;
+  background:var(--accent-wash);
+}
+.hero-figure{
+  position:relative;margin:0;width:100%;
+  aspect-ratio:3 / 4;overflow:hidden;
+  clip-path:inset(0% 0% 0% 0%);
+}
+.hero-figure img{
+  position:absolute;left:0;right:0;top:-7%;
+  width:100%;height:114%;object-fit:cover;object-position:50% 20%;
+  filter:grayscale(1) contrast(1.05);
+}
+
+.hero-meta{
+  margin-top:clamp(40px,6vw,72px);
+  border-top:1px solid var(--line-strong);
+}
+.hero-meta dl{
+  margin:0;display:grid;grid-template-columns:1fr;
+}
+@media (min-width:680px){.hero-meta dl{grid-template-columns:repeat(2,1fr)}}
+@media (min-width:1000px){.hero-meta dl{grid-template-columns:repeat(4,1fr)}}
+.meta-row{
+  padding:16px 0 18px;border-bottom:1px solid var(--line);
+  display:flex;flex-direction:column;gap:5px;
+}
+@media (min-width:680px){
+  .meta-row{padding-right:22px}
+  .meta-row + .meta-row{border-left:1px solid var(--line);padding-left:22px}
+}
+@media (min-width:680px) and (max-width:999px){
+  .meta-row:nth-child(odd){border-left:0;padding-left:0}
+}
+.meta-row dt{color:var(--ink-2);font-family:var(--mono);font-size:.68rem;letter-spacing:.14em;text-transform:uppercase}
+.meta-row dd{margin:0;font-size:.98rem;font-weight:500;line-height:1.35}
+.meta-row dd .accent{color:var(--accent)}
+
+.hero-cta{
+  margin-top:clamp(30px,4vw,44px);
+  display:flex;flex-wrap:wrap;gap:12px 14px;align-items:center;
+}
+.btn{
+  display:inline-flex;align-items:center;gap:10px;
+  font-family:var(--mono);font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;
+  padding:13px 22px;border:1px solid var(--ink);
+  transition:background .35s var(--ease),color .35s var(--ease),border-color .35s var(--ease);
+}
+.btn:hover{background:var(--ink);color:var(--ground)}
+.btn-accent{border-color:var(--accent);color:var(--accent)}
+.btn-accent:hover{background:var(--accent);color:var(--ground-2)}
+.btn svg{width:12px;height:12px;flex:none}
+
+/* ---------- método (escuro, pinado) ---------- */
+.metodo{background:var(--void);color:var(--on-void)}
+.metodo .sec-head{border-bottom-color:var(--void-line)}
+.metodo .sec-head .mono{color:var(--on-void-2)}
+.metodo-intro{
+  max-width:52ch;color:var(--on-void-2);
+  font-size:clamp(1rem,1.25vw,1.15rem);line-height:1.62;
+  margin-bottom:clamp(34px,5vw,58px);
+}
+.metodo-intro strong{color:var(--on-void);font-weight:500}
+.principios{
+  display:flex;flex-direction:column;gap:clamp(28px,4vw,44px);
+}
+.principio{
+  display:grid;grid-template-columns:auto 1fr;gap:16px 20px;align-items:start;
+  padding-bottom:clamp(24px,3vw,36px);
+  border-bottom:1px solid var(--void-line);
+}
+.principio:last-child{border-bottom:0;padding-bottom:0}
+@media (min-width:820px){
+  .principio{grid-template-columns:52px minmax(0,1fr) minmax(0,1.5fr);gap:0 clamp(24px,3vw,48px);align-items:baseline}
+}
+.principio-n{
+  font-family:var(--mono);font-size:.72rem;letter-spacing:.1em;
+  color:var(--accent-void);padding-top:.45em;
+}
+.principio-t{
+  font-family:var(--display);
+  font-size:clamp(1.3rem,2.5vw,1.95rem);
+  font-weight:600;line-height:1.05;letter-spacing:-.025em;
+  font-variation-settings:'wdth' 92;
+  grid-column:2 / -1;
+  overflow-wrap:normal;hyphens:none;
+}
+@media (min-width:820px){.principio-t{grid-column:2}}
+.principio-d{
+  grid-column:1 / -1;color:var(--on-void-2);max-width:56ch;
+  font-size:.98rem;line-height:1.62;
+}
+@media (min-width:820px){.principio-d{grid-column:3}}
+.principio-d b{color:var(--on-void);font-weight:500}
+
+.metodo-quote{
+  margin-top:clamp(48px,7vw,86px);
+  padding-top:clamp(28px,4vw,42px);
+  border-top:1px solid var(--void-line);
+  display:grid;gap:14px;
+}
+.metodo-quote q{
+  font-family:var(--display);
+  font-size:clamp(1.5rem,4vw,3rem);
+  font-weight:600;line-height:1.06;letter-spacing:-.035em;
+  font-variation-settings:'wdth' 90,'opsz' 60;
+  quotes:'\201C' '\201D';
+  max-width:20ch;
+}
+.metodo-quote figcaption{color:var(--on-void-2);font-family:var(--mono);font-size:.68rem;letter-spacing:.14em;text-transform:uppercase}
+
+/* ---------- projetos ---------- */
+.proj{
+  border-top:1px solid var(--line-strong);
+  padding-block:clamp(32px,4.4vw,54px);
+}
+.proj:last-of-type{border-bottom:1px solid var(--line-strong)}
+.proj-top{
+  display:grid;gap:10px 32px;align-items:baseline;
+  grid-template-columns:1fr;
+  margin-bottom:22px;
+}
+@media (min-width:820px){
+  .proj-top{grid-template-columns:minmax(0,1fr) auto}
+}
+.proj-name{
+  font-family:var(--display);
+  font-size:clamp(1.75rem,4.2vw,3.15rem);
+  font-weight:700;line-height:.98;letter-spacing:-.038em;
+  font-variation-settings:'wdth' 90,'opsz' 60;
+  display:inline-flex;align-items:baseline;gap:14px;flex-wrap:wrap;
+}
+.proj-name a{position:relative;color:inherit}
+.proj-name a::after{
+  content:"";position:absolute;left:0;bottom:.06em;height:2px;width:0;background:var(--accent);
+  transition:width .4s var(--ease);
+}
+.proj-name a:hover{color:var(--accent)}
+.proj-name a:hover::after{width:100%}
+.proj-kind{color:var(--ink-2);font-family:var(--mono);font-size:.7rem;letter-spacing:.14em;text-transform:uppercase;white-space:nowrap}
+.proj-line{
+  max-width:60ch;color:var(--ink-2);margin-bottom:26px;
+  font-size:1rem;line-height:1.6;
+}
+.proj-line b{color:var(--ink);font-weight:500}
+
+.dre{
+  display:grid;gap:0;grid-template-columns:1fr;
+  border:1px solid var(--line);background:var(--ground-2);
+}
+@media (min-width:900px){.dre{grid-template-columns:repeat(3,1fr)}}
+.dre-cell{padding:18px 20px 20px;border-bottom:1px solid var(--line)}
+.dre-cell:last-child{border-bottom:0}
+@media (min-width:900px){
+  .dre-cell{border-bottom:0;border-right:1px solid var(--line)}
+  .dre-cell:last-child{border-right:0}
+}
+.dre-cell h4{
+  font-family:var(--mono);font-size:.66rem;letter-spacing:.16em;text-transform:uppercase;
+  color:var(--accent);margin-bottom:9px;font-weight:500;
+}
+.dre-cell p{font-size:.94rem;line-height:1.58;color:var(--ink)}
+.dre-cell.is-risk h4{color:var(--ink-2)}
+
+.proj-stack{
+  margin-top:20px;display:flex;flex-wrap:wrap;gap:7px 9px;
+}
+.proj-stack li{
+  font-family:var(--mono);font-size:.68rem;letter-spacing:.06em;
+  color:var(--ink-2);
+  padding:5px 10px;border:1px solid var(--line);
+}
+.proj-note{
+  margin-top:14px;font-family:var(--mono);font-size:.68rem;letter-spacing:.06em;
+  color:var(--ink-2);
+}
+
+.outros{
+  margin-top:clamp(34px,4.6vw,56px);
+  display:grid;gap:14px;
+}
+.outros-h{color:var(--ink-2)}
+.outros-list{display:flex;flex-wrap:wrap;gap:8px 10px}
+.outros-list a{
+  font-family:var(--mono);font-size:.7rem;letter-spacing:.06em;
+  padding:7px 12px;border:1px solid var(--line);color:var(--ink-2);
+  transition:color .3s var(--ease),border-color .3s var(--ease);
+}
+.outros-list a:hover{color:var(--accent);border-color:var(--accent)}
+
+/* ---------- ferramentas ---------- */
+.sec-note{max-width:58ch;color:var(--ink-2);margin-bottom:clamp(30px,4vw,48px);line-height:1.62}
+.tools{
+  display:grid;grid-template-columns:1fr;gap:0;
+  border-top:1px solid var(--line-strong);
+}
+@media (min-width:840px){.tools{grid-template-columns:repeat(3,1fr)}}
+.tool-col{padding:24px 0 28px;border-bottom:1px solid var(--line)}
+@media (min-width:840px){
+  .tool-col{padding:26px 26px 30px 0;border-bottom:0}
+  .tool-col + .tool-col{border-left:1px solid var(--line);padding-left:26px}
+}
+.tool-col h3{
+  font-family:var(--display);font-size:1.12rem;font-weight:600;letter-spacing:-.02em;
+  margin-bottom:4px;
+}
+.tool-col .tool-sub{color:var(--ink-2);font-size:.86rem;line-height:1.5;margin-bottom:16px}
+.tool-col ul{display:flex;flex-direction:column;gap:0}
+.tool-col li{
+  font-family:var(--mono);font-size:.8rem;letter-spacing:.02em;
+  padding:7px 0;border-bottom:1px dotted var(--line);
+}
+.tool-col li:last-child{border-bottom:0}
+.tool-col.is-prod li{color:var(--ink)}
+.tool-col.is-prod h3{color:var(--accent)}
+
+/* ---------- sobre ---------- */
+.sobre-grid{
+  display:grid;grid-template-columns:1fr;gap:clamp(28px,4vw,56px);align-items:start;
+}
+@media (min-width:900px){
+  .sobre-grid{grid-template-columns:minmax(0,.8fr) minmax(0,1.2fr)}
+}
+.sobre-fig{position:relative;max-width:420px;clip-path:inset(0% 0% 0% 0%)}
+.sobre-fig img{width:100%;filter:grayscale(1) contrast(1.04)}
+.sobre-fig figcaption{
+  margin-top:10px;font-family:var(--mono);font-size:.66rem;letter-spacing:.13em;
+  text-transform:uppercase;color:var(--ink-2);
+}
+.sobre-body{display:grid;gap:18px}
+.sobre-body p{max-width:58ch;line-height:1.66}
+.sobre-lead{
+  font-family:var(--display);
+  font-size:clamp(1.3rem,2.4vw,1.85rem);
+  font-weight:500;line-height:1.24;letter-spacing:-.022em;
+  max-width:26ch;
+}
+.sobre-body .accent{color:var(--accent)}
+
+/* ---------- contato ---------- */
+.contato{background:var(--void);color:var(--on-void)}
+.contato .sec-head{border-bottom-color:var(--void-line)}
+.contato .sec-head .mono{color:var(--on-void-2)}
+.contato-lead{
+  max-width:34ch;
+  font-family:var(--display);
+  font-size:clamp(1.5rem,3.3vw,2.5rem);
+  font-weight:600;line-height:1.12;letter-spacing:-.03em;
+  margin-bottom:clamp(30px,4vw,48px);
+}
+.contato-links{display:grid;gap:0;border-top:1px solid var(--void-line)}
+.clink{
+  display:flex;align-items:baseline;justify-content:space-between;gap:18px;flex-wrap:wrap;
+  padding:19px 0;border-bottom:1px solid var(--void-line);
+  transition:padding-left .4s var(--ease),color .35s var(--ease);
+}
+.clink:hover{padding-left:14px;color:var(--accent-void)}
+.clink-k{font-family:var(--mono);font-size:.68rem;letter-spacing:.15em;text-transform:uppercase;color:var(--on-void-2);flex:none}
+.clink-v{
+  font-family:var(--display);font-size:clamp(1.05rem,2.2vw,1.7rem);
+  font-weight:500;letter-spacing:-.022em;word-break:break-word;
+}
+
+.footer{
+  background:var(--void);color:var(--on-void-2);
+  padding-block:26px 34px;
+  border-top:1px solid var(--void-line);
+}
+.footer-in{
+  display:flex;flex-wrap:wrap;gap:10px 26px;justify-content:space-between;align-items:center;
+  font-family:var(--mono);font-size:.66rem;letter-spacing:.1em;text-transform:uppercase;
+}
+
+@media (prefers-reduced-motion:reduce){
+  *{animation-duration:.01ms!important;transition-duration:.01ms!important}
+}
+
+/* ---------- i18n ----------
+   Fica no fim de propósito: precisa vencer qualquer regra de display
+   declarada acima (ex.: .hero-eyebrow span{display:inline-flex}). */
+html body [lang="en"]{display:none}
+html[data-lang="en"] body [lang="pt-BR"]{display:none}
+html[data-lang="en"] body [lang="en"]{display:revert}
+</style>
+</head>
+<body>
+
+<div class="grain" aria-hidden="true"></div>
+
+<aside class="spine" aria-hidden="true">
+  <div class="spine-inner">
+    <span class="spine-mark">V.</span>
+    <span class="spine-bar"></span>
+    <span class="spine-now" id="spineNow">início</span>
+  </div>
+</aside>
+
+<header class="nav" id="nav">
+  <a class="nav-name" href="#top">Valério</a>
+  <nav class="nav-links" aria-label="Seções">
+    <a href="#metodo"><span lang="pt-BR">Método</span><span lang="en">Method</span></a>
+    <a href="#projetos"><span lang="pt-BR">Projetos</span><span lang="en">Projects</span></a>
+    <a href="#ferramentas"><span lang="pt-BR">Ferramentas</span><span lang="en">Tools</span></a>
+    <a href="#sobre"><span lang="pt-BR">Sobre</span><span lang="en">About</span></a>
+    <a href="#contato"><span lang="pt-BR">Contato</span><span lang="en">Contact</span></a>
+  </nav>
+  <div class="lang" role="group" aria-label="Idioma / Language">
+    <button type="button" id="langPt" data-lang-btn="pt" aria-pressed="true">PT</button>
+    <button type="button" id="langEn" data-lang-btn="en" aria-pressed="false">EN</button>
+  </div>
+</header>
+
+<main>
+
+  <!-- ============ HERO ============ -->
+  <section class="hero wrap" id="top">
+    <div class="hero-top">
+      <p class="hero-eyebrow mono">
+        <span lang="pt-BR">Rio de Janeiro, Brasil</span><span lang="en">Rio de Janeiro, Brazil</span>
+        <span lang="pt-BR">Ciência da Computação · UERJ</span><span lang="en">Computer Science · UERJ</span>
+        <span lang="pt-BR">Backend Python &amp; Dados</span><span lang="en">Python Backend &amp; Data</span>
+      </p>
+      <div class="lang" role="group" aria-label="Idioma / Language">
+        <button type="button" id="langPtHero" data-lang-btn="pt" aria-pressed="true">PT</button>
+        <button type="button" id="langEnHero" data-lang-btn="en" aria-pressed="false">EN</button>
+      </div>
+    </div>
+
+    <h1 class="hero-name" id="heroName">Valério</h1>
+
+    <div class="hero-grid">
+      <div>
+        <p class="hero-thesis">
+          <span lang="pt-BR">Escrevo backend em Python. Antes disso, escrevo <em>a pergunta</em> que o código precisa responder.</span>
+          <span lang="en">I write Python backends. Before that, I write down <em>the question</em> the code has to answer.</span>
+        </p>
+        <p class="hero-sub">
+          <span lang="pt-BR">Sétimo período de Ciência da Computação na UERJ, procurando estágio ou primeira vaga. Interessado na parte que a maioria pula: entender o negócio bem o suficiente para não construir a coisa errada com muita competência.</span>
+          <span lang="en">Seventh semester of Computer Science at UERJ, looking for an internship or a first role. Drawn to the part most people skip: understanding the business well enough not to build the wrong thing very competently.</span>
+        </p>
+      </div>
+
+      <div class="hero-figure-wrap">
+        <figure class="hero-figure" id="heroFig">
+          <img src="assets/hero.webp" width="1100" height="1466" alt="Valério" fetchpriority="high">
+        </figure>
+      </div>
+    </div>
+
+    <div class="hero-meta">
+      <dl>
+        <div class="meta-row">
+          <dt><span lang="pt-BR">Situação</span><span lang="en">Status</span></dt>
+          <dd><span class="accent"><span lang="pt-BR">Procurando estágio ou júnior</span><span lang="en">Open to internship / junior</span></span></dd>
+        </div>
+        <div class="meta-row">
+          <dt><span lang="pt-BR">Foco</span><span lang="en">Focus</span></dt>
+          <dd><span lang="pt-BR">Backend Python · Engenharia de dados</span><span lang="en">Python backend · Data engineering</span></dd>
+        </div>
+        <div class="meta-row">
+          <dt><span lang="pt-BR">Formação</span><span lang="en">Education</span></dt>
+          <dd><span lang="pt-BR">CC · UERJ, 7º período</span><span lang="en">CS · UERJ, 7th semester</span></dd>
+        </div>
+        <div class="meta-row">
+          <dt><span lang="pt-BR">Também escrevo</span><span lang="en">Also fluent in</span></dt>
+          <dd><span lang="pt-BR">Java · SQL · documentação que alguém lê</span><span lang="en">Java · SQL · documentation people read</span></dd>
+        </div>
+      </dl>
+    </div>
+
+    <div class="hero-cta">
+      <a class="btn btn-accent" href="#projetos">
+        <span lang="pt-BR">Ver projetos</span><span lang="en">See the work</span>
+      </a>
+      <a class="btn" href="https://github.com/vsys-val" target="_blank" rel="noopener">
+        GitHub
+        <svg viewBox="0 0 12 12" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M3 9L9 3M9 3H4.2M9 3v4.8"/></svg>
+      </a>
+      <a class="btn" href="mailto:versys.reggentia@gmail.com">
+        <span lang="pt-BR">Falar comigo</span><span lang="en">Get in touch</span>
+      </a>
+    </div>
+  </section>
+
+  <!-- ============ MÉTODO ============ -->
+  <section class="sec metodo" id="metodo">
+    <div class="wrap">
+      <div class="sec-head">
+        <span class="mono"><span lang="pt-BR">Como eu trabalho</span><span lang="en">How I work</span></span>
+        <h2 class="sec-title"><span lang="pt-BR">Método</span><span lang="en">Method</span></h2>
+      </div>
+
+      <p class="metodo-intro">
+        <span lang="pt-BR">Meu método cabe em seis linhas, e a ordem importa: cada uma só faz sentido depois da anterior. Não é filosofia. É o que eu faço antes de abrir o editor.</span>
+        <span lang="en">My method fits in six lines, and the order matters: each one only makes sense after the one before it. It isn't philosophy. It's what I do before opening the editor.</span>
+      </p>
+
+      <ol class="principios">
+        <li class="principio">
+          <span class="principio-n">01</span>
+          <h3 class="principio-t"><span lang="pt-BR">Problema antes da solução</span><span lang="en">Problem before solution</span></h3>
+          <p class="principio-d">
+            <span lang="pt-BR">Se ninguém consegue dizer qual dor está sendo resolvida, o projeto já começou torto. Eu pergunto até ficar chato. É mais barato ser chato na reunião de escopo do que na entrega.</span>
+            <span lang="en">If nobody can say which pain is being solved, the project already started crooked. I keep asking until it gets annoying. Being annoying in the scoping meeting is cheaper than being annoying at delivery.</span>
+          </p>
+        </li>
+        <li class="principio">
+          <span class="principio-n">02</span>
+          <h3 class="principio-t"><span lang="pt-BR">Risco antes do documento</span><span lang="en">Risk before paperwork</span></h3>
+          <p class="principio-d">
+            <span lang="pt-BR">Documento que não muda uma decisão é <b>decoração com frontmatter</b>. Primeiro identifico o que pode dar errado e quanto custa; o artefato existe pra endereçar isso, não pra encher pasta.</span>
+            <span lang="en">A document that changes no decision is <b>decoration with frontmatter</b>. First I name what can go wrong and what it costs; the artifact exists to address that, not to fill a folder.</span>
+          </p>
+        </li>
+        <li class="principio">
+          <span class="principio-n">03</span>
+          <h3 class="principio-t"><span lang="pt-BR">Métrica antes do MVP</span><span lang="en">Metric before MVP</span></h3>
+          <p class="principio-d">
+            <span lang="pt-BR">Entregar rápido é fácil. Entregar algo que dá pra <b>medir</b> depois é o que separa protótipo de produto. Se não dá pra dizer como saberemos que funcionou, ainda não é escopo.</span>
+            <span lang="en">Shipping fast is easy. Shipping something you can <b>measure</b> afterwards is what separates a prototype from a product. If we can't say how we'll know it worked, it isn't scope yet.</span>
+          </p>
+        </li>
+        <li class="principio">
+          <span class="principio-n">04</span>
+          <h3 class="principio-t"><span lang="pt-BR">Simples o bastante para aguentar</span><span lang="en">Simple enough to hold</span></h3>
+          <p class="principio-d">
+            <span lang="pt-BR">A solução certa é a mais simples que sustenta o problema real, não a mais elegante que eu saberia construir. Abstração que ninguém pediu é dívida técnica com boas intenções.</span>
+            <span lang="en">The right solution is the simplest one that holds the real problem, not the most elegant one I could build. An abstraction nobody asked for is technical debt with good intentions.</span>
+          </p>
+        </li>
+        <li class="principio">
+          <span class="principio-n">05</span>
+          <h3 class="principio-t"><span lang="pt-BR">Honestidade cedo</span><span lang="en">Honesty, early</span></h3>
+          <p class="principio-d">
+            <span lang="pt-BR">Prefiro a conversa desconfortável no dia 3 à surpresa no dia 30. Se o prazo não fecha, digo antes; se eu não sei, digo que não sei e volto com resposta.</span>
+            <span lang="en">I'd rather have the uncomfortable conversation on day 3 than the surprise on day 30. If the deadline doesn't hold, I say so early; if I don't know, I say I don't know and come back with an answer.</span>
+          </p>
+        </li>
+        <li class="principio">
+          <span class="principio-n">06</span>
+          <h3 class="principio-t"><span lang="pt-BR">Produção exige operação</span><span lang="en">Production needs operating</span></h3>
+          <p class="principio-d">
+            <span lang="pt-BR">Deploy não é entrega. Quem recebe precisa saber <b>o que mudou, o que pode quebrar e como voltar atrás</b>, além de log e de um jeito de perceber a falha antes do cliente perceber.</span>
+            <span lang="en">A deploy isn't a delivery. Whoever receives it needs to know <b>what changed, what can break and how to roll back</b>, plus logs and a way to notice the failure before the customer does.</span>
+          </p>
+        </li>
+      </ol>
+
+      <figure class="metodo-quote">
+        <q><span lang="pt-BR">Nenhuma dessas seis linhas é sobre código. É exatamente por isso que elas vêm antes.</span><span lang="en">None of these six lines is about code. That is exactly why they come first.</span></q>
+      </figure>
+    </div>
+  </section>
+
+  <!-- ============ PROJETOS ============ -->
+  <section class="sec wrap" id="projetos">
+    <div class="sec-head">
+      <span class="mono"><span lang="pt-BR">Decisão · Risco · Evidência</span><span lang="en">Decision · Risk · Evidence</span></span>
+      <h2 class="sec-title"><span lang="pt-BR">Projetos</span><span lang="en">Projects</span></h2>
+    </div>
+
+    <p class="sec-note">
+      <span lang="pt-BR">Lista de tecnologia todo mundo tem. Abaixo, cada projeto está descrito pela decisão que eu tomei, o risco que ela endereçava e a evidência de que funciona. É assim que eu penso projeto.</span>
+      <span lang="en">Everyone has a tech list. Below, each project is described by the decision I made, the risk it addressed and the evidence that it works. That's how I think about projects.</span>
+    </p>
+
+    <!-- 1 -->
+    <article class="proj">
+      <div class="proj-top">
+        <h3 class="proj-name">
+          <a href="https://github.com/vsys-val/fastapi-merchant-app" target="_blank" rel="noopener">fastapi-merchant-app</a>
+        </h3>
+        <span class="proj-kind"><span lang="pt-BR">API em produção · Python</span><span lang="en">Live API · Python</span></span>
+      </div>
+      <p class="proj-line">
+        <span lang="pt-BR">API de catálogo de produtos e avaliações de consumidores. <b>Rodando em produção</b> no Render, com PostgreSQL no Supabase. Não é projeto de pasta local.</span>
+        <span lang="en">An API for a product catalog and consumer reviews. <b>Running in production</b> on Render with PostgreSQL on Supabase. Not a local-folder project.</span>
+      </p>
+      <div class="dre">
+        <div class="dre-cell">
+          <h4><span lang="pt-BR">Decisão</span><span lang="en">Decision</span></h4>
+          <p>
+            <span lang="pt-BR">Credenciais separadas: um papel administrativo só para migrações, e outro de privilégio mínimo para o runtime, com RLS ligado nas tabelas de negócio e internas.</span>
+            <span lang="en">Split credentials: an admin role for migrations only, and a least-privilege role for runtime, with RLS enabled on business and internal tables.</span>
+          </p>
+        </div>
+        <div class="dre-cell is-risk">
+          <h4><span lang="pt-BR">Risco</span><span lang="en">Risk</span></h4>
+          <p>
+            <span lang="pt-BR">Uma falha na camada da API não pode virar acesso irrestrito ao banco. Se a aplicação cair, o estrago para no papel que ela usa.</span>
+            <span lang="en">A flaw in the API layer must not become unrestricted database access. If the app is compromised, the blast radius stops at the role it runs as.</span>
+          </p>
+        </div>
+        <div class="dre-cell">
+          <h4><span lang="pt-BR">Evidência</span><span lang="en">Evidence</span></h4>
+          <p>
+            <span lang="pt-BR">127 testes automatizados, smoke test diário contra a API publicada e rate limit de login atômico resolvido no próprio Postgres, não em memória.</span>
+            <span lang="en">127 automated tests, a daily smoke test against the published API, and atomic login rate limiting solved in Postgres itself, not in memory.</span>
+          </p>
+        </div>
+      </div>
+      <ul class="proj-stack">
+        <li>FastAPI</li><li>SQLAlchemy</li><li>Alembic</li><li>PostgreSQL</li>
+        <li>JWT + Argon2id</li><li>Pytest</li><li>GitHub Actions</li><li>Render · Supabase</li>
+      </ul>
+    </article>
+
+    <!-- 2 -->
+    <article class="proj">
+      <div class="proj-top">
+        <h3 class="proj-name">
+          <a href="https://github.com/vsys-val/job-market-monitor" target="_blank" rel="noopener">job-market-monitor</a>
+        </h3>
+        <span class="proj-kind"><span lang="pt-BR">Pipeline de dados · Python</span><span lang="en">Data pipeline · Python</span></span>
+      </div>
+      <p class="proj-line">
+        <span lang="pt-BR">Coletor de vagas remotas da área de dados: consome duas APIs públicas, normaliza para um modelo único, guarda em SQLite e exporta CSV. Nasceu de um problema meu: <b>procurar estágio</b>.</span>
+        <span lang="en">A collector for remote data-role job posts: reads two public APIs, normalizes them into one model, stores in SQLite and exports CSV. It came from a problem of my own: <b>looking for an internship</b>.</span>
+      </p>
+      <div class="dre">
+        <div class="dre-cell">
+          <h4><span lang="pt-BR">Decisão</span><span lang="en">Decision</span></h4>
+          <p>
+            <span lang="pt-BR">Deduplicação por URL na camada de persistência, não no consumo. Um filtro local compensa o comportamento inconsistente de uma das APIs.</span>
+            <span lang="en">Deduplication by URL at the persistence layer, not at read time. A local filter compensates for one API's inconsistent behavior.</span>
+          </p>
+        </div>
+        <div class="dre-cell is-risk">
+          <h4><span lang="pt-BR">Risco</span><span lang="en">Risk</span></h4>
+          <p>
+            <span lang="pt-BR">As duas fontes publicam a mesma vaga. Contar duas vezes envenena qualquer análise feita depois, e ninguém percebe até a conclusão estar errada.</span>
+            <span lang="en">Both sources publish the same posting. Counting it twice poisons every later analysis, and nobody notices until the conclusion is wrong.</span>
+          </p>
+        </div>
+        <div class="dre-cell">
+          <h4><span lang="pt-BR">Evidência</span><span lang="en">Evidence</span></h4>
+          <p>
+            <span lang="pt-BR">Histórico de execuções com timestamp, log em terminal e arquivo, tratamento de falha de requisição e suíte de testes em Pytest.</span>
+            <span lang="en">Timestamped run history, terminal and file logging, graceful request-failure handling, and a Pytest suite.</span>
+          </p>
+        </div>
+      </div>
+      <ul class="proj-stack">
+        <li>Python 3.12</li><li>SQLite</li><li>Pandas</li><li>Requests</li><li>Pytest</li><li>CLI</li>
+      </ul>
+    </article>
+
+    <!-- 3 -->
+    <article class="proj">
+      <div class="proj-top">
+        <h3 class="proj-name">ForHouse</h3>
+        <span class="proj-kind"><span lang="pt-BR">Java · Spring · projeto em grupo</span><span lang="en">Java · Spring · team project</span></span>
+      </div>
+      <p class="proj-line">
+        <span lang="pt-BR">Plataforma de intermediação de serviços domésticos, feita em grupo na UERJ: API em Spring Boot, protótipo navegável de 18 telas e documentação de modelagem.</span>
+        <span lang="en">A home-services marketplace built with a team at UERJ: a Spring Boot API, an 18-screen clickable prototype and full modeling documentation.</span>
+      </p>
+      <div class="dre">
+        <div class="dre-cell">
+          <h4><span lang="pt-BR">Decisão</span><span lang="en">Decision</span></h4>
+          <p>
+            <span lang="pt-BR">O enum de situação do agendamento é ao mesmo tempo a coluna persistida e a fábrica do objeto de estado; o estado vive como <code>@Transient</code>, reconstruído no <code>@PostLoad</code>.</span>
+            <span lang="en">The booking-status enum is both the persisted column and the factory for the state object; the state itself is <code>@Transient</code>, rebuilt on <code>@PostLoad</code>.</span>
+          </p>
+        </div>
+        <div class="dre-cell is-risk">
+          <h4><span lang="pt-BR">Risco</span><span lang="en">Risk</span></h4>
+          <p>
+            <span lang="pt-BR">Mapear cinco classes de estado como entidades só para satisfazer o padrão State: banco poluído, migração cara, nenhum ganho real.</span>
+            <span lang="en">Mapping five state classes as entities just to satisfy the State pattern: a polluted schema, expensive migrations, no real gain.</span>
+          </p>
+        </div>
+        <div class="dre-cell">
+          <h4><span lang="pt-BR">Evidência</span><span lang="en">Evidence</span></h4>
+          <p>
+            <span lang="pt-BR"><code>open-in-view</code> desligado e conversão entidade→DTO dentro da transação: corrigiu um <code>LazyInitializationException</code> real. O domínio não importa nada do framework, então roda em teste puro.</span>
+            <span lang="en"><code>open-in-view</code> disabled and entity→DTO conversion inside the transaction: fixed a real <code>LazyInitializationException</code>. The domain imports nothing from the framework, so it runs in plain unit tests.</span>
+          </p>
+        </div>
+      </div>
+      <ul class="proj-stack">
+        <li>Java 21</li><li>Spring Boot 3.3</li><li>JPA</li><li>JWT · BCrypt</li><li>RBAC</li><li>OpenAPI</li><li>State · Builder</li>
+      </ul>
+    </article>
+
+    <div class="outros">
+      <span class="mono outros-h"><span lang="pt-BR">Outros repositórios</span><span lang="en">Other repositories</span></span>
+      <div class="outros-list">
+        <a href="https://github.com/vsys-val/spring-park-api" target="_blank" rel="noopener">spring-park-api · Java · Spring · Docker</a>
+        <a href="https://github.com/vsys-val/computer-vision-fundamentals" target="_blank" rel="noopener">computer-vision-fundamentals</a>
+        <a href="https://github.com/vsys-val/linux-cli-survival-kit" target="_blank" rel="noopener">linux-cli-survival-kit</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ FERRAMENTAS ============ -->
+  <section class="sec wrap" id="ferramentas">
+    <div class="sec-head">
+      <span class="mono"><span lang="pt-BR">Sem barrinha de proficiência</span><span lang="en">No proficiency bars</span></span>
+      <h2 class="sec-title"><span lang="pt-BR">Ferramentas</span><span lang="en">Tools</span></h2>
+    </div>
+
+    <p class="sec-note">
+      <span lang="pt-BR">Ninguém sabe o que "Python 85%" significa. Então: o que já foi para produção, o que uso sem abrir a documentação a cada cinco minutos, e o que ainda estou aprendendo.</span>
+      <span lang="en">Nobody knows what "Python 85%" means. So instead: what has shipped to production, what I use without opening the docs every five minutes, and what I'm still learning.</span>
+    </p>
+
+    <div class="tools">
+      <div class="tool-col is-prod">
+        <h3><span lang="pt-BR">Foi para produção</span><span lang="en">Shipped to production</span></h3>
+        <p class="tool-sub"><span lang="pt-BR">Usei em algo que outras pessoas acessam.</span><span lang="en">Used in something other people access.</span></p>
+        <ul>
+          <li>Python</li><li>FastAPI</li><li>PostgreSQL</li><li>SQLAlchemy · Alembic</li>
+          <li>Pytest</li><li>Git · GitHub Actions</li><li>Render · Supabase</li>
+        </ul>
+      </div>
+      <div class="tool-col">
+        <h3><span lang="pt-BR">Uso com conforto</span><span lang="en">Comfortable with</span></h3>
+        <p class="tool-sub"><span lang="pt-BR">Resolvo problema real sem tutorial aberto.</span><span lang="en">I solve real problems without a tutorial open.</span></p>
+        <ul>
+          <li>Java · Spring Boot</li><li>SQL</li><li>Pandas</li><li>SQLite</li>
+          <li>Linux · CLI</li><li>REST · OpenAPI</li><li>JWT · Argon2 · BCrypt</li><li>Docker</li>
+        </ul>
+      </div>
+      <div class="tool-col">
+        <h3><span lang="pt-BR">Estudando agora</span><span lang="en">Learning right now</span></h3>
+        <p class="tool-sub"><span lang="pt-BR">Sei o suficiente para saber o que não sei.</span><span lang="en">I know enough to know what I don't.</span></p>
+        <ul>
+          <li>Polars</li><li><span lang="pt-BR">Orquestração de pipelines</span><span lang="en">Pipeline orchestration</span></li>
+          <li><span lang="pt-BR">Visão computacional</span><span lang="en">Computer vision</span></li>
+          <li>MLOps</li><li><span lang="pt-BR">Modelagem dimensional</span><span lang="en">Dimensional modeling</span></li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ SOBRE ============ -->
+  <section class="sec wrap" id="sobre">
+    <div class="sec-head">
+      <span class="mono"><span lang="pt-BR">Quem digita</span><span lang="en">Who's typing</span></span>
+      <h2 class="sec-title"><span lang="pt-BR">Sobre</span><span lang="en">About</span></h2>
+    </div>
+
+    <div class="sobre-grid">
+      <figure class="sobre-fig" id="sobreFig">
+        <img src="assets/sobre.webp" width="1000" height="1250" alt="Valério" loading="lazy">
+        <figcaption>Valério · Rio de Janeiro</figcaption>
+      </figure>
+
+      <div class="sobre-body">
+        <p class="sobre-lead">
+          <span lang="pt-BR">Gosto mais de entender <span class="accent">por que</span> uma coisa quebra do que de fazer ela funcionar de primeira.</span>
+          <span lang="en">I'm more interested in <span class="accent">why</span> something breaks than in making it work on the first try.</span>
+        </p>
+        <p>
+          <span lang="pt-BR">Estou no sétimo período de Ciência da Computação na UERJ. No caminho, descobri que a parte que mais me interessa não é a mais difícil tecnicamente. É a conversa antes do código: entender o negócio, achar a dor de verdade e escolher a solução mais simples que aguenta o problema.</span>
+          <span lang="en">I'm in the seventh semester of Computer Science at UERJ. Along the way I found that the part that interests me most isn't the technically hardest one. It's the conversation before the code: understanding the business, finding the actual pain, and picking the simplest solution that holds the problem.</span>
+        </p>
+        <p>
+          <span lang="pt-BR">Isso acabou virando método, e o método acabou virando ferramenta. Provavelmente diz mais sobre mim do que qualquer lista de tecnologia. Trabalho bem quando o prazo é claro, o escopo é honesto e alguém do outro lado quer o problema resolvido, não impressionado.</span>
+          <span lang="en">That turned into a method, and the method turned into tooling. It probably says more about me than any tech list. I work well when the deadline is clear, the scope is honest, and someone on the other side wants the problem solved, not flattered.</span>
+        </p>
+        <p>
+          <span lang="pt-BR">Procurando estágio ou primeira posição em <b>backend Python</b> ou <b>dados</b>. Se o encaixe for outro e fizer sentido, também quero ouvir.</span>
+          <span lang="en">Looking for an internship or a first role in <b>Python backend</b> or <b>data</b>. If the fit is something else and it makes sense, I still want to hear it.</span>
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ CONTATO ============ -->
+  <section class="sec contato" id="contato">
+    <div class="wrap">
+      <div class="sec-head">
+        <span class="mono"><span lang="pt-BR">Disponível</span><span lang="en">Available</span></span>
+        <h2 class="sec-title"><span lang="pt-BR">Contato</span><span lang="en">Contact</span></h2>
+      </div>
+
+      <p class="contato-lead">
+        <span lang="pt-BR">Se você tem um problema e quer alguém que pergunte bastante antes de prometer, me escreve.</span>
+        <span lang="en">If you have a problem and want someone who asks a lot before promising anything, write to me.</span>
+      </p>
+
+      <div class="contato-links">
+        <a class="clink" href="mailto:versys.reggentia@gmail.com">
+          <span class="clink-k">E-mail</span>
+          <span class="clink-v">versys.reggentia@gmail.com</span>
+        </a>
+        <a class="clink" href="https://github.com/vsys-val" target="_blank" rel="noopener">
+          <span class="clink-k">GitHub</span>
+          <span class="clink-v">github.com/vsys-val</span>
+        </a>
+        <a class="clink" href="https://www.linkedin.com/in/valeriotech/" target="_blank" rel="noopener">
+          <span class="clink-k">LinkedIn</span>
+          <span class="clink-v">linkedin.com/in/valeriotech</span>
+        </a>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="footer">
+  <div class="wrap footer-in">
+    <span>© <span id="yr">2026</span> Valério</span>
+    <span lang="pt-BR">Rio de Janeiro, Brasil</span>
+    <span lang="en">Rio de Janeiro, Brazil</span>
+  </div>
+</footer>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/lenis@1.1.18/dist/lenis.min.js"></script>
+<script>
+(function () {
+  "use strict";
+  var root = document.documentElement;
+  root.classList.add("js");
+  document.getElementById("yr").textContent = new Date().getFullYear();
+
+  /* ---------------- idioma ---------------- */
+  var langBtns = Array.prototype.slice.call(document.querySelectorAll("[data-lang-btn]"));
+
+  function setLang(code) {
+    root.setAttribute("data-lang", code);
+    root.lang = code === "en" ? "en" : "pt-BR";
+    langBtns.forEach(function (b) {
+      b.setAttribute("aria-pressed", String(b.getAttribute("data-lang-btn") === code));
+    });
+    try { localStorage.setItem("val-lang", code); } catch (e) {}
+    if (window.ScrollTrigger) ScrollTrigger.refresh();
+  }
+  langBtns.forEach(function (b) {
+    b.addEventListener("click", function () { setLang(b.getAttribute("data-lang-btn")); });
+  });
+
+  var stored = null;
+  try { stored = localStorage.getItem("val-lang"); } catch (e) {}
+  if (stored === "en" || stored === "pt") {
+    setLang(stored);
+  } else if ((navigator.language || "").slice(0, 2).toLowerCase() !== "pt") {
+    setLang("en");
+  }
+
+  /* ---------------- nav ---------------- */
+  var nav = document.getElementById("nav");
+  var navLinks = Array.prototype.slice.call(document.querySelectorAll(".nav-links a"));
+  var spineNow = document.getElementById("spineNow");
+  var spineBar = document.querySelector(".spine-bar");
+
+  var sectionNames = {
+    top: ["início", "start"],
+    metodo: ["método", "method"],
+    projetos: ["projetos", "projects"],
+    ferramentas: ["ferramentas", "tools"],
+    sobre: ["sobre", "about"],
+    contato: ["contato", "contact"]
+  };
+
+  function markSection(id) {
+    var pair = sectionNames[id];
+    if (pair && spineNow) {
+      spineNow.textContent = root.getAttribute("data-lang") === "en" ? pair[1] : pair[0];
+    }
+    navLinks.forEach(function (a) {
+      var on = a.getAttribute("href") === "#" + id;
+      if (on) a.setAttribute("aria-current", "true");
+      else a.removeAttribute("aria-current");
+    });
+  }
+
+  var reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  var hasGsap = typeof window.gsap !== "undefined" && typeof window.ScrollTrigger !== "undefined";
+
+  if (hasGsap) gsap.registerPlugin(ScrollTrigger);
+
+  /* ---------------- lenis ---------------- */
+  var lenis = null;
+  if (!reduce && typeof window.Lenis !== "undefined" && hasGsap) {
+    lenis = new Lenis({ duration: 1.05, smoothWheel: true, touchMultiplier: 1.4 });
+    lenis.on("scroll", ScrollTrigger.update);
+    gsap.ticker.add(function (t) { lenis.raf(t * 1000); });
+    gsap.ticker.lagSmoothing(0);
+  }
+  document.querySelectorAll('a[href^="#"]').forEach(function (a) {
+    a.addEventListener("click", function (ev) {
+      var id = a.getAttribute("href");
+      if (id.length < 2) return;
+      var el = document.querySelector(id);
+      if (!el) return;
+      ev.preventDefault();
+      if (lenis) lenis.scrollTo(el, { offset: -10 });
+      else el.scrollIntoView({ behavior: reduce ? "auto" : "smooth" });
+    });
+  });
+
+  /* ---------------- estado do nav / spine ---------------- */
+  function onScroll() {
+    var y = window.scrollY || window.pageYOffset;
+    if (y > window.innerHeight * 0.55) nav.classList.add("is-up");
+    else nav.classList.remove("is-up");
+    var max = document.body.scrollHeight - window.innerHeight;
+    if (spineBar) spineBar.style.setProperty("--p", (max > 0 ? (y / max) * 100 : 0).toFixed(2) + "%");
+  }
+  window.addEventListener("scroll", onScroll, { passive: true });
+  onScroll();
+
+  Object.keys(sectionNames).forEach(function (id) {
+    var el = document.getElementById(id);
+    if (!el) return;
+    if (hasGsap) {
+      ScrollTrigger.create({
+        trigger: el,
+        start: "top 45%",
+        end: "bottom 45%",
+        onEnter: function () { markSection(id); },
+        onEnterBack: function () { markSection(id); }
+      });
+    }
+  });
+
+  if (!hasGsap || reduce) return;
+
+  /* ---------------- split por caractere ---------------- */
+  function splitChars(el) {
+    var text = el.textContent;
+    el.textContent = "";
+    var frag = document.createDocumentFragment();
+    for (var i = 0; i < text.length; i++) {
+      var s = document.createElement("span");
+      s.className = "ch";
+      s.textContent = text[i] === " " ? " " : text[i];
+      frag.appendChild(s);
+    }
+    el.appendChild(frag);
+    return el.querySelectorAll(".ch");
+  }
+
+  /* ---------------- abertura ---------------- */
+  var heroName = document.getElementById("heroName");
+  var chars = splitChars(heroName);
+
+  var intro = gsap.timeline({ defaults: { ease: "expo.out" } });
+  intro
+    .from(".hero-top .hero-eyebrow span, .hero-top .lang", { yPercent: 120, opacity: 0, duration: 1, stagger: 0.06 }, 0)
+    .from(chars, { yPercent: 118, opacity: 0, duration: 1.25, stagger: 0.045 }, 0.1)
+    .from(".hero-thesis", { y: 26, opacity: 0, duration: 1.1 }, 0.55)
+    .from(".hero-sub", { y: 20, opacity: 0, duration: 1 }, 0.68)
+    .from("#heroFig", { clipPath: "inset(100% 0% 0% 0%)", duration: 1.35, ease: "power4.out" }, 0.35)
+    .from(".meta-row", { y: 22, opacity: 0, duration: 0.9, stagger: 0.08 }, 0.8)
+    .from(".hero-cta .btn", { y: 18, opacity: 0, duration: 0.8, stagger: 0.07 }, 1.0);
+
+  /* parallax leve no retrato do hero */
+  gsap.to("#heroFig img", {
+    yPercent: -5,
+    ease: "none",
+    scrollTrigger: { trigger: ".hero", start: "top top", end: "bottom top", scrub: 0.6 }
+  });
+
+  /* ---------------- títulos de seção ---------------- */
+  gsap.utils.toArray(".sec-head").forEach(function (head) {
+    gsap.from(head.children, {
+      y: 30, opacity: 0, duration: 1, ease: "expo.out", stagger: 0.09,
+      scrollTrigger: { trigger: head, start: "top 88%", once: true }
+    });
+  });
+
+  /* ---------------- método ---------------- */
+  gsap.from(".metodo-intro", {
+    y: 28, opacity: 0, duration: 1, ease: "expo.out",
+    scrollTrigger: { trigger: ".metodo-intro", start: "top 86%", once: true }
+  });
+
+  gsap.utils.toArray(".principio").forEach(function (li) {
+    var tl = gsap.timeline({
+      scrollTrigger: { trigger: li, start: "top 84%", once: true }
+    });
+    tl.from(li.querySelector(".principio-n"), { opacity: 0, x: -14, duration: .7, ease: "power3.out" }, 0)
+      .from(li.querySelector(".principio-t"), { opacity: 0, y: 26, duration: .95, ease: "expo.out" }, 0.05)
+      .from(li.querySelector(".principio-d"), { opacity: 0, y: 18, duration: .9, ease: "expo.out" }, 0.16);
+  });
+
+  gsap.from(".metodo-quote > *", {
+    opacity: 0, y: 32, duration: 1.1, ease: "expo.out", stagger: 0.12,
+    scrollTrigger: { trigger: ".metodo-quote", start: "top 85%", once: true }
+  });
+
+  /* ---------------- projetos ---------------- */
+  gsap.utils.toArray(".proj").forEach(function (card) {
+    var tl = gsap.timeline({
+      scrollTrigger: { trigger: card, start: "top 82%", once: true }
+    });
+    tl.from(card.querySelector(".proj-top"), { opacity: 0, y: 30, duration: .95, ease: "expo.out" }, 0)
+      .from(card.querySelector(".proj-line"), { opacity: 0, y: 20, duration: .85, ease: "expo.out" }, 0.1)
+      .from(card.querySelectorAll(".dre-cell"), { opacity: 0, y: 24, duration: .9, ease: "expo.out", stagger: 0.09 }, 0.18)
+      .from(card.querySelectorAll(".proj-stack li"), { opacity: 0, y: 12, duration: .55, ease: "power3.out", stagger: 0.025 }, 0.34);
+  });
+
+  gsap.from(".outros-list a", {
+    opacity: 0, y: 14, duration: .6, ease: "power3.out", stagger: 0.06,
+    scrollTrigger: { trigger: ".outros", start: "top 90%", once: true }
+  });
+
+  /* ---------------- ferramentas ---------------- */
+  gsap.utils.toArray(".tool-col").forEach(function (col, i) {
+    gsap.from(col.querySelectorAll("h3, .tool-sub, li"), {
+      opacity: 0, y: 20, duration: .8, ease: "expo.out", stagger: 0.045, delay: i * 0.07,
+      scrollTrigger: { trigger: ".tools", start: "top 82%", once: true }
+    });
+  });
+  gsap.utils.toArray(".sec-note").forEach(function (n) {
+    gsap.from(n, {
+      opacity: 0, y: 22, duration: .9, ease: "expo.out",
+      scrollTrigger: { trigger: n, start: "top 88%", once: true }
+    });
+  });
+
+  /* ---------------- sobre ---------------- */
+  gsap.from("#sobreFig", {
+    clipPath: "inset(0% 0% 100% 0%)", duration: 1.3, ease: "power4.out",
+    scrollTrigger: { trigger: "#sobreFig", start: "top 84%", once: true }
+  });
+  gsap.to("#sobreFig img", {
+    yPercent: -3, ease: "none",
+    scrollTrigger: { trigger: "#sobre", start: "top bottom", end: "bottom top", scrub: 0.6 }
+  });
+  gsap.from(".sobre-body > *", {
+    opacity: 0, y: 26, duration: 1, ease: "expo.out", stagger: 0.1,
+    scrollTrigger: { trigger: ".sobre-body", start: "top 84%", once: true }
+  });
+
+  /* ---------------- contato ---------------- */
+  gsap.from(".contato-lead", {
+    opacity: 0, y: 30, duration: 1.05, ease: "expo.out",
+    scrollTrigger: { trigger: ".contato-lead", start: "top 86%", once: true }
+  });
+  gsap.from(".clink", {
+    opacity: 0, y: 24, duration: .9, ease: "expo.out", stagger: 0.09,
+    scrollTrigger: { trigger: ".contato-links", start: "top 88%", once: true }
+  });
+
+  ScrollTrigger.refresh();
+})();
+</script>
+</body>
+</html>
